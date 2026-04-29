@@ -1,0 +1,12 @@
+.config/*
+
+
+!.config/alacritty/
+!.config/foot/
+!.config/hypr/
+!.config/nvim/
+!.config/starship.toml
+!.config/Thunar/
+!.config/waybar/
+!.config/waypaper/
+!.config/yazi/

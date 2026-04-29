@@ -1,0 +1,66 @@
+{
+    // Global Settings
+    "layer": "top",
+	  "mod": "dock",
+    "exclusive": true,
+    "passthrough": false,
+    "gtk-layer-shell": true,
+    "reload_style_on_change": true, 
+    "height": 28,
+    "margin-left": 8,
+    "margin-right": 8,
+    "margin-top": 0,
+    "margin-bottom": 0,
+    "spacing": 0, 
+
+
+    // Module Selection
+    "modules-left": ["clock", "battery"],
+    "modules-center": ["hyprland/workspaces"],
+    "modules-right": [
+        "memory",
+        "cpu"
+        
+    ],
+
+
+    // Module Configurations
+    "clock": {
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%I:%M %p}",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+
+    "cpu": { 
+      "format": "⏣ {usage}%",
+      "interval": 1
+    },
+
+    "memory": { 
+      "format": "▦ {used}g", 
+      "interval": 1
+    },
+
+    "battery": {
+        "states": { "warning": 30, "critical": 15 },
+        "format": "{icon} {capacity}%",
+        "format-icons": ["⌁"] 
+    },
+    
+    
+    "hyprland/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+          "1": "☣",
+          "2": "☣",
+          "3": "☣",
+          "4": "☣",
+          "5": "☣",
+          "default": "☣",
+          "active": "☢" 
+        },
+        "persistent-workspaces": {
+          "*": [ 1, 2, 3, 4, 5 ]
+        }
+    }
+}
