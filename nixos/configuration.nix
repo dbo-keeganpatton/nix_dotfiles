@@ -14,6 +14,11 @@ let
   ${pkgs.rofi}/bin/rofi -dmenu -i -p "󱕰 Keybinds" 
   '';
 
+  custom-astronaut = pkgs.sddm-astronaut.override {
+    embeddedTheme = "hyprland_kath";
+  };
+
+
 in
 {
 
@@ -68,9 +73,9 @@ in
   environment.systemPackages = with pkgs; [
     python3Packages.pynvim        # Neovim Python Client 
     python3Packages.pip           # Python Package Manager
-    custom-astronaut              # SDDM Login Screen
     phinger-cursors               # Custom Cursor
     keybind-helper                # Custom function for keybind ref popup utility
+    custom-astronaut
     wl-clipboard                  # Wayland Copy/Paste Utility
     wf-recorder                   # Screen Recording Utility
     wireplumber                   # Audio Utility
