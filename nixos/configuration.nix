@@ -1,16 +1,9 @@
 { config, lib, pkgs, ... }:
-
 let
 
-  # Unstable branch for Nvim
   unstable = import <nixos-unstable> {};
 
-  # Custom SDDM login Screen with animated anime girl
-  custom-astronaut = pkgs.sddm-astronaut.override {
-    embeddedTheme = "hyprland_kath";
-  };
-
-  # as a helper tool using SUPER+i 
+  # Keybind GUI utility toggle by SUPER+i
   keybind-helper = pkgs.writeShellScriptBin "keybind-helper" ''
   CONFIG_PATH="$HOME/.config/hypr/hyprland.conf"
   grep '^bind =' "$CONFIG_PATH" | \
@@ -22,102 +15,41 @@ let
   '';
 
 in
-
 {
 
 
   imports = [ 
     ./hardware-configuration.nix
-    ./graphics.nix
+    ./nix_modules/environment_variables.nix
+    ./nix_modules/desktop_environment.nix
+    ./nix_modules/networking.nix
+    ./nix_modules/bluetooth.nix
+    ./nix_modules/services.nix
+    ./nix_modules/graphics.nix
+    ./nix_modules/gaming.nix
+    ./nix_modules/sound.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
-
-  # Bluetooth Config
-  services.blueman.enable                         = true;
-  hardware.bluetooth = {
-    enable                                        = true;
-    powerOnBoot                                   = true;
-  };
+  fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
 
-
-  programs.steam = {
-    enable = true;
-    protontricks.enable = true; 
-    extraPackages = with pkgs; [
-      wineWow64Packages.stable
-      winetricks
-      freetype
-      libjpeg
-      libpng
-      zenity
-      zlib
-      yad
-    ];
-  };
-
-
-
-  # Bootloader Configs
   boot.loader.systemd-boot.enable                 = true;
   boot.loader.efi.canTouchEfiVariables            = true;
   boot.kernelParams                               = ["snd_intel_dspcfg.dsp_driver=3"];
-
-  # Networking (Use nmcli)
-  networking.hostName                             = "eyelady_core"; 
-  networking.networkmanager.enable                = true;
-  networking.firewall.enable                      = true;
-
-  # Homelab Service Hosts
-  networking.hosts = {
-    "192.168.0.7"                                 = ["grafana.local"];	
-  };
-
-  # System Time Zone.
   time.timeZone                                   = "America/Chicago";
 
-  # Desktop Environment Setup 
-  services.displayManager.sddm = {
-    # Login Screen
-    enable                                        = true;
-    wayland.enable                                = true; 
-    theme                                         = "sddm-astronaut-theme";
-    extraPackages = with pkgs; [
-      custom-astronaut
-      kdePackages.qtmultimedia
-      kdePackages.qtsvg
-      kdePackages.qt5compat
-    ];
-  };
 
-
-  services.displayManager.defaultSession          = "hyprland";
-  programs.hyprland.enable                        = true;
-  programs.thunar.enable                          = true; 	# File manager
-  services.gvfs.enable                            = true;		# Trash Bin
-  services.tumbler.enable                         = true;		# Thumbnails
-
-
-  # This is for auto locking the screen
-  services.logind.settings.Login.HandleLidSwitch  = "suspend"; 
+  programs.firefox.enable                         = true;
   programs.hyprlock.enable                        = true;
-  services.hypridle.enable                        = true;
-  services.dbus.enable                            = true;
-  security.polkit.enable                          = true;
-
-
-  # System Basics 
-  services.libinput.enable                        = true;		# Touchpad
-  services.printing.enable                        = true;		# Printing
+  programs.thunar.enable                          = true; 	# File manager
   programs.light.enable                           = true;		# Brightness 
-  services.openssh.enable                         = true;		# SSH Daemon
+
+
+  security.polkit.enable                          = true;
   powerManagement.enable                          = true;		# Power Management
 
-  # Internet Browser
-  programs.firefox.enable                         = true;
 
-  # System Users 
   users.users.keegan = {
     isNormalUser                                  = true;
     extraGroups = [ 
@@ -175,8 +107,6 @@ in
     libpng
     heroic
     #->>
-
-
   
     starship                      # Command Line Prompt Customizer
     python3                       # Python Runtime
@@ -214,46 +144,7 @@ in
     fd                            # Alternative to Find Utility
     jq                            # CLI JSON Processor
   ];
-
-
-  # Wayland Variables
-  environment.sessionVariables = {
-    XDG_SESSION_TYPE                    = "wayland";
-    XDG_CURRENT_DESKTOP                 = "Hyprland";
-    MOZ_ENABLE_WAYLAND                  = "1";
-    QT_QPA_PLATFORM                     = "wayland";
-    SDL_VIDEODRIVER                     = "wayland";
-    GDK_BACKEND                         = "wayland";
-
-    # Cursor Configs
-    XCURSOR_THEME                       = "phinger-cursors-light";
-    XCURSOR_SIZE                        = "24";
-    HYPRCURSOR_SIZE                     = "24";
-  };
-
-
-  # Sound
-  security.rtkit.enable = true;
-  services.pulseaudio.enable = false;
-  hardware.enableAllFirmware = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-    wireplumber = { enable = true; };
-  };
-
- 
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
-
-  # Fonts
-  fonts.packages                        = [ pkgs.nerd-fonts.jetbrains-mono ];
-
+  
   # Nix Specific
   nixpkgs.config.allowUnfree            = true;
   system.stateVersion                   = "25.11";

@@ -1,4 +1,5 @@
 { config, pkgs, ... }:
+
 {
 
   # Enable 32bit support for steam to work
