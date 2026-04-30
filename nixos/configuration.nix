@@ -33,6 +33,7 @@ in
     ./nix_modules/graphics.nix
     ./nix_modules/gaming.nix
     ./nix_modules/sound.nix
+    ./nix_modules/ai.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
