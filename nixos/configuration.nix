@@ -120,6 +120,8 @@ in
     zathura                       # Terminal Based PDF Utility
     gnumake                       # Build Automation for MAKE
     ripgrep                       # System Search Tool
+    kubectl 
+    kubernetes-helm
     unstable.neovim               # Text Editor
     heroku                        # Deployment and Hosting Service CLI
     kalker                        # System Calculator
