@@ -4,7 +4,6 @@
 
   # Enable 32bit support for steam to work
   hardware.opengl.enable = true;
-  hardware.opengl.driSupport = true;
   hardware.graphics = {
     enable                            = true;
     enable32Bit                       = true; 
