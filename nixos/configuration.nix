@@ -92,6 +92,7 @@ in
     waypaper                      # Wallpaper Manager
     mpvpaper                      # Live Wallpaper Utility
     luarocks                      # Lua Package Manager
+    libreoffice                   # Mundane utilities
     rpi-imager                    # Raspberry Pi imager
     pciutils 		                  # PCI Utility
     google-chrome
