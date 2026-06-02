@@ -86,7 +86,7 @@ keymap.set(
 ---------------------------
 vim.pack.add({
   -->> Colorschemes
-  {src = "https://github.com/0xstepit/flow.nvim"},
+  -->> {src = "https://github.com/0xstepit/flow.nvim"},
 
   -->> Netrw Directory Tree navigation
   {src = "https://github.com/nvim-tree/nvim-tree.lua.git"},
@@ -123,6 +123,7 @@ vim.pack.add({
   {src = "https://github.com/nvim-lualine/lualine.nvim.git"},
   {src = "https://github.com/lewis6991/gitsigns.nvim.git"},
   {src = "https://github.com/MunifTanjim/nui.nvim.git"},
+  {src = "https://github.com/goolord/alpha-nvim.git"},
 
   -->> Debugging
   {src = "https://github.com/folke/trouble.nvim.git"},
@@ -143,27 +144,27 @@ require("nvim-tree").setup({
 
 -- C.3  Colorscheme
 ---------------------------
-require("flow").setup({
-  theme = {
-    contrast = "high",
-    transparent = true,
-  },
-  colors = {
-    fluo = "green",
-    custom = {saturation = "90"},
-  },
-  ui = {
-    borders = "fluo",
-    aggressive_spell = false,
-  }
-})
-vim.cmd("colorscheme flow")
-vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })       
-vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "none" }) 
-vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })   
-vim.api.nvim_set_hl(0, "FoldColumn", { bg = "none" })   
+-- require("flow").setup({
+--   theme = {
+--     contrast = "high",
+--     transparent = true,
+--   },
+--   colors = {
+--     fluo = "green",
+--     custom = {saturation = "90"},
+--   },
+--   ui = {
+--     borders = "fluo",
+--     aggressive_spell = false,
+--   }
+-- })
+-- vim.cmd("colorscheme flow")
+-- vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+-- vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })       
+-- vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "none" }) 
+-- vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })   
+-- vim.api.nvim_set_hl(0, "FoldColumn", { bg = "none" })   
 
 
 -- C.4  NeoScroll 
@@ -278,6 +279,44 @@ require("lualine").setup({
     lualine_z = {}
   },
 })
+
+local alpha = require("alpha")
+local dashboard = require("alpha.themes.dashboard")
+dashboard.section.header.val = [[
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡌⢻⣧⠹⣿⣿⢸⣿⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡌⢿⣧⡘⣿⠈⣿⡇⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⠛⠋⠉⠉⠋⠉⠁⠀⠀⠀⠀⠉⠉⠈⢿⣷⣌⠃⠟⡱⢰⣿⡦⣙⣛⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢻⡽⢲⠾⢣⣿⡿⢡⣿⣿⢧⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠴⣣⢺⢲⣼⢡⣿⡿⢃⣚⣆⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣴⣦⡶⢃⠰⠏⢈⢻⢡⣶⣾⣿⣆⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣿⣯⠀⣝⠸⠂⠸⢀⠘⣿⣿⣿⣿⣆⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣧⡁⢩⣷⣿⣄⠻⡆⣿⣿⣿⣿⣿⣆⢹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠿⣿⣿⣿⣿⣷⣅⢹⣿⣿⣿⣿⣿⣦⣦⣍⣛⡿⠿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢰⡀⠀⠀⠀⠀⠀⠀⠈⠙⠻⣿⣿⣿⣦⡿⠿⠟⣿⣿⣿⣿⣿⣿⣿⣷⣶⣮⣭⣙⡛⠻⠿
+⣿⣿⢡⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢘⣩⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠛⠻⢿⣦⣴⣟⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⢀⣿⠿⠿⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣶⣭⣙⡻⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣬⠀⠀⠀⠀⠀⠀⠀⠸⢠⣶⠶⠒⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣶⣮⣝⡛⠿⣿⣿⣿⣿⣿⣿
+⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠛⠀⠀⠀⠀⠀⠀⠀⣤⠋⠀⢀⣈⣿⡄⠳⠖⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣬⣝⡛⠿⣿
+⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠼⠿⠿⠄⠀⠀⠀⠀⠀⣼⣿⣾⣁⣠⣡⣤⣦⣼⡆⠀⠀⠀⠀⠀⢠⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶
+⣿⣿⡇⠠⠀⠀⠀⠀⠀⠀⠀⠀⢀⡄⢰⡆⣲⠀⠀⠀⠀⢠⣾⣿⣿⣿⣿⣿⣹⣿⣿⣿⠁⠀⠀⠀⠀⠀⠈⡄⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠓⠈⣡⣴⠆⠀⠀⢠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⢸⠇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⡄⡄⠀⠀⠀⠀⠀⠀⠀⢰⣶⢿⣿⣿⠀⠀⠀⣿⣿⡿⢿⣛⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀⠀⠀⠸⢀⠄⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣧⠀⠀⠀⠀⠀⠀⠀⠀⢸⢻⢸⣽⣿⠀⠀⢸⣿⣿⣿⣾⡿⠿⠿⠿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠈⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⢾⣿⣿⣿⠀⠀⣿⣿⡏⡅⠒⠈⠀⠀⠀⢸⣿⣿⣿⠄⠀⠀⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀⠀⠀⢈⠻⣿⣿⠀⠀⣿⣿⡇⠀⣴⣶⣶⣿⡆⢸⣿⣿⡟⢀⠀⠀⠀⠀⠀⠀⣸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣄⠀⠀⠀⠀⠀⠀⠈⢤⡙⢿⣇⠀⠸⣿⣿⣄⠻⣿⣿⡿⠇⣼⣿⢋⡀⣠⠂⠀⠀⠀⠀⣰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿
+⣿⣿⣿⣿⣿⣿⣿⡀⠠⡀⠀⠀⠀⠀⠈⠻⣦⣌⠓⠦⣙⣿⣿⣷⣤⣭⣶⣾⣿⣿⠏⣰⡏⠀⠀⠀⠀⠘⣿⡿⠟⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠟⣋⣥⣾
+⣿⣿⣿⣿⣿⣿⣿⣷⡀⢻⣆⡀⠀⠀⠀⠠⣈⡉⢀⡀⣮⣍⣛⠿⢿⣿⣿⡿⢟⣡⣾⣿⡤⠆⠀⠀⠀⢀⣀⣠⣶⣿⣿⣿⡿⠟⣋⣩⣭⣵⣶⣶⣾⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⣙⠃⢀⣷⣄⠀⢬⣳⣿⣧⠸⣿⣿⣿⣶⣶⣶⡶⠿⠛⠛⠉⠀⠀⠀⠀⠀⣤⣉⣉⣭⣿⠟⣡⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢁⣼⣿⣿⣷⣶⣾⣿⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⠀⠀⠀⠻⠿⣛⠛⣥⡾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⡀⠀⢠⣀⣀⣀⣀⣀⣠⣤⣴⣶⣾⣿⣿⣴⡄⠘⣿⠱⠊⣾⣿⣷⣿⣿⣿⣿⣿⣿⣿⡟⣹⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠈⠀⣠⣸⣿⣿⣿⣿⣿⣿⣿⣿⡏⣿⣿⣿⣿⠿⡀⠀⢶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢱⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠿⢟⣋⣡⡤⠀⢠⣿⣿⣿⣿⣷⡹⣿⣿⣿⣿⣿⠀⠿⢟⣩⣴⣿⣿⡀⠈⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⢡⣿⣿⣿⣿⣿⣿⠿
+⣿⣿⣿⠿⠟⣛⣋⣭⣭⣵⣖⣠⣜⣛⠿⠿⠁⠀⠿⠿⠿⣿⣟⠿⣷⠘⣿⣿⣿⠃⢀⣾⣿⣿⣿⣿⣿⣷⡀⠀⠻⣿⣿⣿⣿⣿⣿⣿⠣⣿⣿⣿⣿⡿⡋⣴⣿
+⡿⢋⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⢀⣾⣿⣿⣿⣿⣿⣷⣦⣤⣾⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣧⠀⠀⠹⣿⣿⣿⣿⣿⣿⢸⣿⣿⣿⢋⣼⢠⣿⣿
+⢡⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⠀⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⡿⢓⣰⠃⣿⣿⣿]]
+alpha.setup(dashboard.config)
+
 
 
 -- C.9 Completely Useless
