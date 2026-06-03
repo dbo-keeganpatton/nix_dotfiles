@@ -59,6 +59,8 @@ in
   users.users.keegan = {
     isNormalUser                                  = true;
     extraGroups = [ 
+      "adbusers" 
+      "kvm"
       "networkmanager"
       "video"
       "audio"
@@ -152,6 +154,10 @@ in
     jq                            # CLI JSON Processor
   ];
   
+
+  # Android
+  programs.adb.enable = true;
+
   # Nix Specific
   nixpkgs.config.allowUnfree            = true;
   system.stateVersion                   = "25.11";

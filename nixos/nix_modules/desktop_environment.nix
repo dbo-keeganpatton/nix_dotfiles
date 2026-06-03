@@ -5,13 +5,12 @@ let
     embeddedTheme = "hyprland_kath";
   };
 in
-
 {
 
   services.displayManager.sddm = {
-    enable           = true;
-    wayland.enable   = true; 
-    theme            = "sddm-astronaut-theme";
+    enable         = true;
+    wayland.enable = true;
+    theme          = "sddm-astronaut-theme";
 
     extraPackages = with pkgs; [
       custom-astronaut
@@ -22,15 +21,12 @@ in
     ];
   };
 
-
-  services.displayManager.defaultSession  = "hyprland";
-  programs.hyprland.enable                = true;
+  services.displayManager.defaultSession = "hyprland";
+  programs.hyprland.enable = true;
 
   xdg.portal = {
-    enable        = true;
-    extraPortals  = [ pkgs.xdg-desktop-portal-gtk ];
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
-
-
 
 }
