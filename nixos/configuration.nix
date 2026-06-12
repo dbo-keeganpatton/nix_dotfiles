@@ -18,6 +18,31 @@ let
     embeddedTheme = "hyprland_kath";
   };
 
+  # Time Determined Wallpapers
+  morningWall   = "/home/keegan/.config/waypaper/Wallpapers/morning_wallpaper.mp4";
+  afternoonWall = "/home/keegan/.config/waypaper/Wallpapers/day_wallpaper.mp4";
+  eveningWall   = "/home/keegan/.config/waypaper/Wallpapers/evening_wallpaper.mp4";
+  nightWall     = "/home/keegan/.config/waypaper/Wallpapers/night_wallpaper.mp4";
+
+  dynamicWallpaperScript = pkgs.writeShellScriptBin "dynamic-wallpaper" ''
+    HOUR=$(${pkgs.coreutils}/bin/date +%H)
+
+    if [ "$HOUR" -ge 6 ] && [ "$HOUR" -lt 12 ]; then
+        CURRENT_WALLPAPER="${morningWall}"
+    elif [ "$HOUR" -ge 12 ] && [ "$HOUR" -lt 18 ]; then
+        CURRENT_WALLPAPER="${afternoonWall}"
+    elif [ "$HOUR" -ge 18 ] && [ "$HOUR" -lt 22 ]; then
+        CURRENT_WALLPAPER="${eveningWall}"
+    else
+        CURRENT_WALLPAPER="${nightWall}"
+    fi
+
+    # Set via hyprland CLI (Change eDP-1 to your monitor name)
+    # Using 'toplevel' hyprland package ensures we grab the system's active hyprctl binary
+    ${pkgs.hyprland}/bin/hyprctl hyprpaper preload "$CURRENT_WALLPAPER"
+    ${pkgs.hyprland}/bin/hyprctl hyprpaper wallpaper "eDP-1,$CURRENT_WALLPAPER"
+  '';
+
 
 in
 {
@@ -99,6 +124,9 @@ in
     pciutils 		                  # PCI Utility
     google-chrome
 
+    #->> Time of day wallpaper setting
+    dynamicWallpaperScript
+
     #->> These packages are for linux-casefolding fix
     #->> to fix texture issues in Counter Strike Source
     inotify-tools
@@ -157,6 +185,31 @@ in
 
   # Android
   programs.adb.enable = true;
+
+
+
+  # Dynamic Wallpaper dependency
+  systemd.user.services."dynamic-wallpaper" = {
+    description = "Set wallpaper based on time of day";
+    wantedBy = [ "graphical-session.target" ];
+    after = [ "graphical-session.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = "${dynamicWallpaperScript}/bin/dynamic-wallpaper";
+    };
+  };
+
+
+  systemd.user.timers."dynamic-wallpaper" = {
+    description = "Run dynamic wallpaper script hourly";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "*-*-* *:00:00"; # Every hour on the hour
+      OnBootSec = "10sec";          # Run 10 seconds after boot
+      AccuracySec = "1m";
+    };
+  };
+
 
   # Nix Specific
   nixpkgs.config.allowUnfree            = true;
