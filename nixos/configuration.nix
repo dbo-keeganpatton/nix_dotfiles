@@ -24,6 +24,7 @@ let
   eveningWall   = "/home/keegan/.config/waypaper/Wallpapers/evening_wallpaper.mp4";
   nightWall     = "/home/keegan/.config/waypaper/Wallpapers/night_wallpaper.mp4";
 
+
   dynamicWallpaperScript = pkgs.writeShellScriptBin "dynamic-wallpaper" ''
     HOUR=$(${pkgs.coreutils}/bin/date +%H)
 
@@ -37,10 +38,8 @@ let
         CURRENT_WALLPAPER="${nightWall}"
     fi
 
-    # Set via hyprland CLI (Change eDP-1 to your monitor name)
-    # Using 'toplevel' hyprland package ensures we grab the system's active hyprctl binary
-    ${pkgs.hyprland}/bin/hyprctl hyprpaper preload "$CURRENT_WALLPAPER"
-    ${pkgs.hyprland}/bin/hyprctl hyprpaper wallpaper "eDP-1,$CURRENT_WALLPAPER"
+    # Feed the video directly to waypaper, specifying mpvpaper as the backend wrapper
+    ${pkgs.waypaper}/bin/waypaper --backend mpvpaper --wallpaper "$CURRENT_WALLPAPER"
   '';
 
 
@@ -186,30 +185,9 @@ in
   # Android
   programs.adb.enable = true;
 
-
-
-  # Dynamic Wallpaper dependency
-  systemd.user.services."dynamic-wallpaper" = {
-    description = "Set wallpaper based on time of day";
-    wantedBy = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      ExecStart = "${dynamicWallpaperScript}/bin/dynamic-wallpaper";
-    };
-  };
-
-
-  systemd.user.timers."dynamic-wallpaper" = {
-    description = "Run dynamic wallpaper script hourly";
-    wantedBy = [ "timers.target" ];
-    timerConfig = {
-      OnCalendar = "*-*-* *:00:00"; # Every hour on the hour
-      OnBootSec = "10sec";          # Run 10 seconds after boot
-      AccuracySec = "1m";
-    };
-  };
-
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-39.8.10"
+  ];
 
   # Nix Specific
   nixpkgs.config.allowUnfree            = true;
