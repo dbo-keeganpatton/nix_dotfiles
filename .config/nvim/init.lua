@@ -87,6 +87,7 @@ keymap.set(
 vim.pack.add({
   -->> Colorschemes
   -->> {src = "https://github.com/0xstepit/flow.nvim"},
+  {src = "https://github.com/ellisonleao/gruvbox.nvim.git"},
 
   -->> Netrw Directory Tree navigation
   {src = "https://github.com/nvim-tree/nvim-tree.lua.git"},
@@ -166,6 +167,20 @@ require("nvim-tree").setup({
 -- vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })   
 -- vim.api.nvim_set_hl(0, "FoldColumn", { bg = "none" })   
 
+require("gruvbox").setup({
+  terminal_colors = true,
+  transparent_mode = true, -- Enables transparency
+})
+
+vim.cmd("colorscheme gruvbox")
+
+-- Transparency overrides
+vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
+vim.api.nvim_set_hl(0, "LineNr", { bg = "none" })
+vim.api.nvim_set_hl(0, "CursorLineNr", { bg = "none" })
+vim.api.nvim_set_hl(0, "SignColumn", { bg = "none" })
+vim.api.nvim_set_hl(0, "FoldColumn", { bg = "none" })
 
 -- C.4  NeoScroll 
 ---------------------------
@@ -267,7 +282,7 @@ require("multicursor-nvim").setup({})
 require("render-markdown").setup({})
 require("lualine").setup({
   options = {
-    theme = "powerline_dark",
+    theme = "gruvbox_dark",
     icons_enabled = false,
   },
   sections = {
