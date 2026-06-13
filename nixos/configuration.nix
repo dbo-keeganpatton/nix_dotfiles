@@ -32,7 +32,7 @@ let
         CURRENT_WALLPAPER="${morningWall}"
     elif [ "$HOUR" -ge 12 ] && [ "$HOUR" -lt 18 ]; then
         CURRENT_WALLPAPER="${afternoonWall}"
-    elif [ "$HOUR" -ge 18 ] && [ "$HOUR" -lt 22 ]; then
+    elif [ "$HOUR" -ge 18 ] && [ "$HOUR" -lt 21 ]; then
         CURRENT_WALLPAPER="${eveningWall}"
     else
         CURRENT_WALLPAPER="${nightWall}"
