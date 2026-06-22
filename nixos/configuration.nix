@@ -145,6 +145,7 @@ in
     #->>
   
     starship                      # Command Line Prompt Customizer
+    claude-code                   # CLI AI Coding agent
     python3                       # Python Runtime
     cmatrix			                  # Turbo Nerd Flex Tool
     zathura                       # Terminal Based PDF Utility
