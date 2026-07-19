@@ -122,6 +122,7 @@ in
     rpi-imager                    # Raspberry Pi imager
     pciutils 		                  # PCI Utility
     google-chrome
+    yt-dlp                        # YT download tool
 
     #->> Time of day wallpaper setting
     dynamicWallpaperScript
@@ -142,6 +143,12 @@ in
     fontconfig
     libpng
     heroic
+    #->>
+
+
+    #->> Game dev
+    godot
+    android-studio
     #->>
   
     starship                      # Command Line Prompt Customizer
