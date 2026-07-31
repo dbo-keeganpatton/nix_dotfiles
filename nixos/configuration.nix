@@ -3,6 +3,9 @@ let
 
   unstable = import <nixos-unstable> {};
 
+  herdr = (builtins.getFlake "github:herdrdev/herdr/v0.7.5")
+    .packages.${pkgs.system}.default;
+
   # Keybind GUI utility toggle by SUPER+i
   keybind-helper = pkgs.writeShellScriptBin "keybind-helper" ''
   CONFIG_PATH="$HOME/.config/hypr/hyprland.conf"
@@ -153,6 +156,7 @@ in
   
     starship                      # Command Line Prompt Customizer
     claude-code                   # CLI AI Coding agent
+    herdr                         # Terminal multiplexer for coding agents
     python3                       # Python Runtime
     cmatrix			                  # Turbo Nerd Flex Tool
     zathura                       # Terminal Based PDF Utility
