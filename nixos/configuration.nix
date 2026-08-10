@@ -181,6 +181,7 @@ in
     kitty                         # I shouldn't even have this shit here, literally just for pets.nvim
     wofi                          # Menu GUI
     btop-cuda                     # Btop Version for GPU monitoring
+    ffmpeg
     yazi                          # Command Line File Manager
     grim                          # Screenshot Utility
     tmux                          # Terminal Multiplexer
