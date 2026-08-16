@@ -8,7 +8,7 @@
 
 window#waybar {
     background: rgba(0, 0, 0, 0.0);
-    color: #FBCEB1;
+    color: #7DF9FF;
 }
 
 #clock,
@@ -17,7 +17,7 @@ window#waybar {
 #battery,
 #workspaces {
     background: rgba(0, 0, 0, 0.6);
-    border: 1px solid #FBCEB1;
+    border: 1px solid #7DF9FF;
     box-shadow: 0px 0px 5px 3px rgba(166, 227, 161, 0.2);
     border-radius: 5px;
     padding: 0 10px;
@@ -31,7 +31,7 @@ window#waybar {
 
 #workspaces button {
     padding: 0 9px;
-    color: #FBCEB1;
+    color: #7DF9FF;
 }
 
 #workspaces button label {
@@ -51,14 +51,14 @@ window#waybar {
 #battery {
     padding-left: 20px;
     padding-right: 20px;
-    border: 1px solid #FBCEB1;
+    border: 1px solid #7DF9FF;
     border-radius: 5px;
 }
 
 #cpu {
     padding-left: 20px;
     padding-right: 20px;
-    border: 1px solid #FBCEB1;
+    border: 1px solid #7DF9FF;
     border-radius: 5px;
 }
 
@@ -66,7 +66,7 @@ window#waybar {
 #memory {
     padding-left: 20px;
     padding-right: 20px;
-    border: 1px solid #FBCEB1;
+    border: 1px solid #7DF9FF;
     border-radius: 5px;
 }
 
@@ -74,5 +74,5 @@ window#waybar {
 #clock {
   padding-left: 20px;
   padding-right: 20px;
-  color: #FBCEB1;
+  color: #7DF9FF;
 }
