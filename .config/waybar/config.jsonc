@@ -37,7 +37,7 @@
     },
 
     "memory": { 
-      "format": "▦ {used}g", 
+      "format": "▦ {percentage}%",
       "interval": 1
     },
 
