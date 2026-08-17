@@ -1,8 +1,0 @@
-
-[window]
-padding = { x = 10, y = 10 }
-decorations = "None"
-opacity = 0.90
-
-[general]
-live_config_reload = true
