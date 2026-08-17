@@ -22,8 +22,8 @@ let
   };
 
   # Time Determined Wallpapers
-  morningWall   = "/home/keegan/.config/waypaper/Wallpapers/before-the-road.1920x1080.mp4";
-  afternoonWall = "/home/keegan/.config/waypaper/Wallpapers/room-in-rainy-day.3840x2160.mp4";
+  morningWall   = "/home/keegan/.config/waypaper/Wallpapers/pixel-lamborghini-countach.3840x2160.mp4";
+  afternoonWall = "/home/keegan/.config/waypaper/Wallpapers/pixel-lamborghini-countach.3841x2160.mp4";
   eveningWall   = "/home/keegan/.config/waypaper/Wallpapers/oblivion-fireplace-pixel.1920x1080.mp4";
   nightWall     = "/home/keegan/.config/waypaper/Wallpapers/emily-in-the-cyberpunk-city.1920x1080.mp4";
 
