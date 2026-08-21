@@ -4,25 +4,25 @@ format = " [$directory$git_branch$git_status]($style)($python) $character "
 
 [character]
 error_symbol = "[!!](bold #FF0000)"
-success_symbol = '[\$](bold #FFBF00)'
+success_symbol = '[\$](bold #7DF9FF)'
 
 [directory]
-style = '#CFCFCF'
+style = '#7DF9FF'
 truncation_length = 2
 truncation_symbol = "⟡ "
-repo_root_style = "#FFBF00"
+repo_root_style = "#7DF9FF"
 repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)"
 
 [python]
-format = '[(${virtualenv})]($italic #808080)'
+format = '[(${virtualenv})]($italic #7DF9FF)'
 
 [git_branch]
 format = " \\[$branch\\]($style) "
-style = "italic #FFFF00"
+style = "italic #7DF9FF"
 
 [git_status]
 format     = '[$all_status]($style)'
-style      = "#FFFF00"
+style      = "#7DF9FF"
 ahead      = "⇡${count} "
 diverged   = "⇕⇡${ahead_count}⇣${behind_count} "
 behind     = "⇣${count} "
