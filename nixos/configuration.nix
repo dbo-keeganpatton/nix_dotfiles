@@ -3,8 +3,15 @@ let
 
   unstable = import <nixos-unstable> {};
 
-  herdr = (builtins.getFlake "github:herdrdev/herdr/v0.7.5")
+  # Herdr is an agent harness tool
+  herdr = (builtins.getFlake "github:herdrdev/herdr/v0.8.2")
     .packages.${pkgs.system}.default;
+
+  # Zen browser does not have an official package yet
+  # so this flake work around is required
+  zen-browser = (builtins.getFlake "github:youwen5/zen-browser-flake")
+    .packages.${pkgs.system}.default;
+
 
   # Keybind GUI utility toggle by SUPER+i
   keybind-helper = pkgs.writeShellScriptBin "keybind-helper" ''
@@ -23,9 +30,9 @@ let
 
   # Time Determined Wallpapers
   morningWall   = "/home/keegan/.config/waypaper/Wallpapers/persona-3-rooftop-sunset.1920x1080.mp4";
-  afternoonWall = "/home/keegan/.config/waypaper/Wallpapers/chainsaw-man-pixel-art.1920x1080.mp4";
+  afternoonWall = "/home/keegan/.config/waypaper/Wallpapers/c7fd270208_final-fantasy-vii-buster-sword-live-wallpaper-wallsflow-com.mp4";
   eveningWall   = "/home/keegan/.config/waypaper/Wallpapers/oblivion-fireplace-pixel.1920x1080.mp4";
-  nightWall     = "/home/keegan/.config/waypaper/Wallpapers/emily-in-the-cyberpunk-city.1920x1080.mp4";
+  nightWall     = "/home/keegan/.config/waypaper/Wallpapers/c7fd270208_final-fantasy-vii-buster-sword-live-wallpaper-wallsflow-com.mp4";
 
 
   dynamicWallpaperScript = pkgs.writeShellScriptBin "dynamic-wallpaper" ''
@@ -126,9 +133,10 @@ in
     pciutils 		                  # PCI Utility
     google-chrome
     yt-dlp                        # YT download tool
+    zen-browser                   # Minimal Web Browser
 
     #->> Time of day wallpaper setting
-    dynamicWallpaperScript
+    # dynamicWallpaperScript
 
     #->> These packages are for linux-casefolding fix
     #->> to fix texture issues in Counter Strike Source
@@ -178,6 +186,7 @@ in
     nmap                          # Network Application
     rofi                          # Wayland Window Switcher Utility
     alacritty                     # GPU buffed terminal
+    contour                       # testing terminal
     kitty                         # I shouldn't even have this shit here, literally just for pets.nvim
     wofi                          # Menu GUI
     btop-cuda                     # Btop Version for GPU monitoring
