@@ -1,5 +1,7 @@
 width=300
 height=200
 mode=drun
-allow_images=true
-prompt=Speak Traveler...
+allow_images=false
+insensitive=true
+dynamic_lines=true
+prompt=DNA:// QUERY DATABASE...│

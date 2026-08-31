@@ -29,6 +29,7 @@ let
   };
 
   # Time Determined Wallpapers
+  constantWall = "/home/keegan/.config/waypaper/Wallpapers/141412-777708076.mp4";
   morningWall   = "/home/keegan/.config/waypaper/Wallpapers/persona-3-rooftop-sunset.1920x1080.mp4";
   afternoonWall = "/home/keegan/.config/waypaper/Wallpapers/c7fd270208_final-fantasy-vii-buster-sword-live-wallpaper-wallsflow-com.mp4";
   eveningWall   = "/home/keegan/.config/waypaper/Wallpapers/oblivion-fireplace-pixel.1920x1080.mp4";
@@ -39,13 +40,13 @@ let
     HOUR=$(${pkgs.coreutils}/bin/date +%H)
 
     if [ "$HOUR" -ge 6 ] && [ "$HOUR" -lt 12 ]; then
-        CURRENT_WALLPAPER="${morningWall}"
+        CURRENT_WALLPAPER="${constantWall}"
     elif [ "$HOUR" -ge 12 ] && [ "$HOUR" -lt 18 ]; then
-        CURRENT_WALLPAPER="${afternoonWall}"
+        CURRENT_WALLPAPER="${constantWall}"
     elif [ "$HOUR" -ge 18 ] && [ "$HOUR" -lt 21 ]; then
-        CURRENT_WALLPAPER="${eveningWall}"
+        CURRENT_WALLPAPER="${constantWall}"
     else
-        CURRENT_WALLPAPER="${nightWall}"
+        CURRENT_WALLPAPER="${constantWall}"
     fi
 
     # Feed the video directly to waypaper, specifying mpvpaper as the backend wrapper
@@ -80,7 +81,7 @@ in
   time.timeZone                                   = "America/Chicago";
 
 
-  programs.firefox.enable                         = true;
+  programs.firefox.enable                         = false;
   programs.hyprlock.enable                        = true;
   programs.thunar.enable                          = true; 	# File manager
   programs.light.enable                           = true;		# Brightness 
@@ -136,7 +137,7 @@ in
     zen-browser                   # Minimal Web Browser
 
     #->> Time of day wallpaper setting
-    # dynamicWallpaperScript
+    dynamicWallpaperScript
 
     #->> These packages are for linux-casefolding fix
     #->> to fix texture issues in Counter Strike Source

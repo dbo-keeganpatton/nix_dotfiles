@@ -11,3 +11,6 @@ live_config_reload = true
 key = "Return"
 mods = "Shift"
 chars = "\u001B\r"
+
+[font]
+size = 9.0
