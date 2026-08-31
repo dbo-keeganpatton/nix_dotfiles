@@ -14,7 +14,6 @@ in
 
     extraPackages = with pkgs; [
       custom-astronaut
-      hyprsunset
       kdePackages.qtmultimedia
       kdePackages.qtsvg
       kdePackages.qt5compat
