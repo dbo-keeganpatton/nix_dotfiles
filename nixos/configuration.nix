@@ -190,6 +190,7 @@ in
     contour                       # testing terminal
     kitty                         # I shouldn't even have this shit here, literally just for pets.nvim
     wofi                          # Menu GUI
+    gimp
     btop-cuda                     # Btop Version for GPU monitoring
     hyprsunset                    # Night Light
     ffmpeg
