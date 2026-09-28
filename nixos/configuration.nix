@@ -126,6 +126,7 @@ in
     hyprpaper                     # Wallpaper Utility
     hyprlock                      # Screen Locking
     hypridle                      # System Idle Daemon 
+    vlc
     waypaper                      # Wallpaper Manager
     mpvpaper                      # Live Wallpaper Utility
     luarocks                      # Lua Package Manager
@@ -174,6 +175,7 @@ in
     kubectl 
     kubernetes-helm
     unstable.neovim               # Text Editor
+    unstable.circumflex           # TUI for browsing hackernews
     heroku                        # Deployment and Hosting Service CLI
     kalker                        # System Calculator
     waybar                        # Desktop Navbar
