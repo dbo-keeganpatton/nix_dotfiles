@@ -29,7 +29,7 @@ let
   };
 
   # Time Determined Wallpapers
-  constantWall = "/home/keegan/.config/waypaper/Wallpapers/141412-777708076.mp4";
+  constantWall = "/home/keegan/.config/waypaper/Wallpapers/26027867.jpg";
   morningWall   = "/home/keegan/.config/waypaper/Wallpapers/persona-3-rooftop-sunset.1920x1080.mp4";
   afternoonWall = "/home/keegan/.config/waypaper/Wallpapers/c7fd270208_final-fantasy-vii-buster-sword-live-wallpaper-wallsflow-com.mp4";
   eveningWall   = "/home/keegan/.config/waypaper/Wallpapers/oblivion-fireplace-pixel.1920x1080.mp4";
