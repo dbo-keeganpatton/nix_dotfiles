@@ -1,7 +1,9 @@
 .config/*
+**.bak
 
 
 !.config/alacritty/
+!.config/kitty/
 !.config/foot/
 !.config/hypr/
 !.config/nvim/

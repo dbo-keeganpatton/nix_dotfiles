@@ -1,3 +1,5 @@
+# This has been disabled in the core
+# config
 { config, pkgs, ... }:
 
 {

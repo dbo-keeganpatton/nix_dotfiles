@@ -68,7 +68,6 @@ in
     ./nix_modules/graphics.nix
     ./nix_modules/gaming.nix
     ./nix_modules/sound.nix
-    ./nix_modules/ai.nix
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -188,9 +187,8 @@ in
     krita                         # Vector grapgic editor
     nmap                          # Network Application
     rofi                          # Wayland Window Switcher Utility
-    alacritty                     # GPU buffed terminal
     contour                       # testing terminal
-    kitty                         # I shouldn't even have this shit here, literally just for pets.nvim
+    kitty                         # Settle Terminal
     wofi                          # Menu GUI
     gimp
     btop-cuda                     # Btop Version for GPU monitoring
