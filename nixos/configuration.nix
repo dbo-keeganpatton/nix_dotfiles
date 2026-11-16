@@ -54,11 +54,42 @@ let
   '';
 
 
+  # Audio-only player with a red bar equalizer rendered inline in Kitty.
+  # mpv handles audio + terminal OSD. ffmpeg generates RGBA frames piped to a
+  # Python sidecar that sends them via Kitty graphics protocol f=32 (true RGBA),
+  # bypassing mpv's kitty VO which hardcodes f=24 (RGB, no transparency).
+  mpv-play = pkgs.writeShellScriptBin "mpv-play" ''
+    set -euo pipefail
+
+    if [ "$#" -ne 1 ]; then
+      echo "Usage: mpv-play <URL>" >&2
+      exit 1
+    fi
+
+    URL=$(${unstable.yt-dlp}/bin/yt-dlp --no-warnings -f bestaudio/best \
+      --extractor-args "youtube:player_client=android" \
+      --get-url "$1" 2>/dev/null | head -1)
+
+    cleanup() {
+      printf '\033[?1049l\033[?25h\033[0m'
+    }
+    trap cleanup EXIT INT TERM
+
+    printf '\033[?1049h\033[H\033[2J\033[?25l'
+
+    env -u DISPLAY ${pkgs.mpv}/bin/mpv \
+      --vo=kitty \
+      --lavfi-complex='[aid1]showfreqs=mode=bar:ascale=log:fscale=lin:win_size=128:win_func=hann:colors=red|red:s=384x200,geq=r=r(X\,Y)*lt(mod(X\,6)\,5):g=0:b=0[vo]' \
+      --osd-level=1 \
+      -- "$URL"
+  '';
+
+
 in
 {
 
 
-  imports = [ 
+  imports = [
     ./hardware-configuration.nix
     ./nix_modules/environment_variables.nix
     ./nix_modules/desktop_environment.nix
@@ -68,6 +99,7 @@ in
     ./nix_modules/graphics.nix
     ./nix_modules/gaming.nix
     ./nix_modules/sound.nix
+    (builtins.getFlake "https://pkgs.superlogical.com/rex/nix/preview.tar.gz").nixosModules.default
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -92,14 +124,15 @@ in
 
   users.users.keegan = {
     isNormalUser                                  = true;
-    extraGroups = [ 
-      "adbusers" 
+    extraGroups = [
+      "adbusers"
       "kvm"
       "networkmanager"
       "video"
       "audio"
-      "wheel" 
-      "sudo" 
+      "wheel"
+      "sudo"
+      "rex"
     ];
     packages = with pkgs; [];
   };
@@ -128,12 +161,14 @@ in
     vlc
     waypaper                      # Wallpaper Manager
     mpvpaper                      # Live Wallpaper Utility
+    mpv                           # YT music player TUI
+    mpv-play                      # Kitty-rendered audio player w/ red EQ
     luarocks                      # Lua Package Manager
     libreoffice                   # Mundane utilities
     rpi-imager                    # Raspberry Pi imager
     pciutils 		                  # PCI Utility
     google-chrome
-    yt-dlp                        # YT download tool
+    unstable.yt-dlp               # YT download tool
     zen-browser                   # Minimal Web Browser
 
     #->> Time of day wallpaper setting
@@ -163,6 +198,8 @@ in
     android-studio
     #->>
   
+    discord-ptb                   # discord chat
+    gnome-calendar                # Calendar App
     starship                      # Command Line Prompt Customizer
     claude-code                   # CLI AI Coding agent
     herdr                         # Terminal multiplexer for coding agents

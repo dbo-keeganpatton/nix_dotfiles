@@ -8,5 +8,7 @@
   services.libinput.enable                        = true;		# Touchpad
   services.printing.enable                        = true;		# Printing
 
-  services.logind.settings.Login.HandleLidSwitch  = "suspend"; 
+  services.logind.settings.Login.HandleLidSwitch  = "suspend";
+
+  services.rex.enable = true;
 }
