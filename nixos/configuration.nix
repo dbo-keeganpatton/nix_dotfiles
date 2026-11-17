@@ -21,7 +21,7 @@ let
   -e 's/^bind[a-z]*\s*=\s*//g' \
   -e 's/,/  +  /g' \
   -e 's/,/  :  /g' | \
-  ${pkgs.rofi}/bin/rofi -dmenu -i -p "󱕰 Keybinds" 
+  ${pkgs.rofi}/bin/rofi -dmenu -i -p "󱕰 Keybinds"
   '';
 
   custom-astronaut = pkgs.sddm-astronaut.override {
@@ -55,9 +55,104 @@ let
 
 
   # Audio-only player with a red bar equalizer rendered inline in Kitty.
-  # mpv handles audio + terminal OSD. ffmpeg generates RGBA frames piped to a
-  # Python sidecar that sends them via Kitty graphics protocol f=32 (true RGBA),
-  # bypassing mpv's kitty VO which hardcodes f=24 (RGB, no transparency).
+  # mpv handles audio. ffmpeg generates RGBA frames read by a Python sidecar
+  # that sends them via Kitty graphics protocol f=32 (true RGBA), bypassing
+  # mpv's kitty VO which hardcodes f=24 (RGB, no transparency).
+  mpv-play-renderer = pkgs.writeTextFile {
+    name = "mpv-play-renderer";
+    executable = true;
+    destination = "/bin/mpv-play-renderer";
+    text = ''
+      #!${pkgs.python3}/bin/python3
+      import sys, os, fcntl, termios, struct, base64, subprocess, signal, tempfile
+
+      ESC = b"\033"
+      ST  = b"\033\\"
+      FFMPEG = "${pkgs.ffmpeg}/bin/ffmpeg"
+
+      def term_info():
+          try:
+              buf = struct.pack("HHHH", 0, 0, 0, 0)
+              r = fcntl.ioctl(sys.stdout.fileno(), termios.TIOCGWINSZ, buf)
+              rows, cols, xpix, ypix = struct.unpack("HHHH", r)
+              if xpix == 0 or ypix == 0:
+                  xpix, ypix = cols * 8, rows * 16
+              return cols, rows, xpix, ypix
+          except Exception:
+              return 80, 24, 640, 384
+
+      def main():
+          if len(sys.argv) < 2:
+              sys.stderr.write("usage: mpv-play-renderer <audio-url>\n")
+              sys.exit(1)
+          url = sys.argv[1]
+
+          cols, rows, xpix, ypix = term_info()
+          cell_w = max(1, xpix // max(1, cols))
+          cell_h = max(1, ypix // max(1, rows))
+          viz_w = cols * cell_w
+          viz_h = rows * cell_h
+
+          # 5px opaque bar + 1px transparent gap, repeating across the width.
+          bar_period, bar_width = 6, 5
+
+          fc = (
+              f"[0:a]showfreqs=mode=bar:ascale=log:fscale=lin:"
+              f"win_size=1024:win_func=hann:colors=red|red:s={viz_w}x{viz_h},"
+              f"format=rgba,"
+              f"geq=r='r(X,Y)':g=0:b=0:"
+              f"a='255*lt(mod(X,{bar_period}),{bar_width})*gt(r(X,Y),16)'[v]"
+          )
+
+          cmd = [
+              FFMPEG, "-hide_banner", "-loglevel", "error",
+              "-re", "-i", url,
+              "-filter_complex", fc,
+              "-map", "[v]", "-r", "30",
+              "-f", "rawvideo", "-pix_fmt", "rgba", "-",
+          ]
+
+          shm = "/dev/shm" if os.path.isdir("/dev/shm") else tempfile.gettempdir()
+          proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
+          frame_bytes = viz_w * viz_h * 4
+          out = sys.stdout.buffer
+
+          out.write(b"\033[1;1H")
+          out.flush()
+
+          try:
+              while True:
+                  data = bytearray()
+                  while len(data) < frame_bytes:
+                      chunk = proc.stdout.read(frame_bytes - len(data))
+                      if not chunk:
+                          return
+                      data += chunk
+
+                  fd, path = tempfile.mkstemp(prefix="mpvplay-", suffix=".rgba", dir=shm)
+                  try:
+                      os.write(fd, bytes(data))
+                  finally:
+                      os.close(fd)
+
+                  p64 = base64.standard_b64encode(path.encode()).decode("ascii")
+                  keys = f"a=T,q=2,f=32,s={viz_w},v={viz_h},i=1,p=1,C=1,t=t"
+                  out.write(b"\033[1;1H")
+                  out.write(ESC + b"_G" + keys.encode("ascii") + b";" + p64.encode("ascii") + ST)
+                  out.flush()
+          finally:
+              try:
+                  proc.terminate()
+                  proc.wait(timeout=2)
+              except subprocess.TimeoutExpired:
+                  proc.kill()
+
+      if __name__ == "__main__":
+          signal.signal(signal.SIGINT, lambda *_: sys.exit(0))
+          main()
+    '';
+  };
+
   mpv-play = pkgs.writeShellScriptBin "mpv-play" ''
     set -euo pipefail
 
@@ -70,18 +165,32 @@ let
       --extractor-args "youtube:player_client=android" \
       --get-url "$1" 2>/dev/null | head -1)
 
+    if [ -z "$URL" ]; then
+      echo "mpv-play: failed to resolve audio URL" >&2
+      exit 1
+    fi
+
+    MPV_PID=""
     cleanup() {
+      if [ -n "$MPV_PID" ]; then
+        kill "$MPV_PID" 2>/dev/null || true
+        wait "$MPV_PID" 2>/dev/null || true
+      fi
+      # Remove kitty graphics image id 1 + any lingering placements.
+      printf '\033_Ga=d,d=i,i=1\033\\'
       printf '\033[?1049l\033[?25h\033[0m'
     }
     trap cleanup EXIT INT TERM
 
     printf '\033[?1049h\033[H\033[2J\033[?25l'
 
-    env -u DISPLAY ${pkgs.mpv}/bin/mpv \
-      --vo=kitty \
-      --lavfi-complex='[aid1]showfreqs=mode=bar:ascale=log:fscale=lin:win_size=128:win_func=hann:colors=red|red:s=384x200,geq=r=r(X\,Y)*lt(mod(X\,6)\,5):g=0:b=0[vo]' \
-      --osd-level=1 \
-      -- "$URL"
+    env -u DISPLAY ${unstable.mpv}/bin/mpv \
+      --no-video --vo=null --no-terminal --quiet --idle=no \
+      --input-default-bindings=no --input-vo-keyboard=no \
+      -- "$URL" >/dev/null 2>&1 &
+    MPV_PID=$!
+
+    ${mpv-play-renderer}/bin/mpv-play-renderer "$URL"
   '';
 
 
@@ -115,7 +224,7 @@ in
   programs.firefox.enable                         = false;
   programs.hyprlock.enable                        = true;
   programs.thunar.enable                          = true; 	# File manager
-  programs.light.enable                           = true;		# Brightness 
+  programs.light.enable                           = true;		# Brightness
 
 
   security.polkit.enable                          = true;
@@ -141,7 +250,7 @@ in
 
   # System Packages
   environment.systemPackages = with pkgs; [
-    python3Packages.pynvim        # Neovim Python Client 
+    python3Packages.pynvim        # Neovim Python Client
     python3Packages.pip           # Python Package Manager
     phinger-cursors               # Custom Cursor
     keybind-helper                # Custom function for keybind ref popup utility
@@ -157,11 +266,11 @@ in
     grimblast                     # Screenshots
     hyprpaper                     # Wallpaper Utility
     hyprlock                      # Screen Locking
-    hypridle                      # System Idle Daemon 
+    hypridle                      # System Idle Daemon
     vlc
     waypaper                      # Wallpaper Manager
     mpvpaper                      # Live Wallpaper Utility
-    mpv                           # YT music player TUI
+    unstable.mpv                           # YT music player TUI
     mpv-play                      # Kitty-rendered audio player w/ red EQ
     luarocks                      # Lua Package Manager
     libreoffice                   # Mundane utilities
@@ -197,7 +306,7 @@ in
     godot
     android-studio
     #->>
-  
+
     discord-ptb                   # discord chat
     gnome-calendar                # Calendar App
     starship                      # Command Line Prompt Customizer
@@ -208,7 +317,7 @@ in
     zathura                       # Terminal Based PDF Utility
     gnumake                       # Build Automation for MAKE
     ripgrep                       # System Search Tool
-    kubectl 
+    kubectl
     kubernetes-helm
     unstable.neovim               # Text Editor
     unstable.circumflex           # TUI for browsing hackernews
@@ -242,7 +351,7 @@ in
     fd                            # Alternative to Find Utility
     jq                            # CLI JSON Processor
   ];
-  
+
 
   # Android
   programs.adb.enable = true;
@@ -256,4 +365,3 @@ in
   system.stateVersion                   = "25.11";
 
 }
-
