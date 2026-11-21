@@ -1,6 +1,6 @@
 * {
     font-family: "Ubuntu Nerd Font", "Roboto", sans-serif;
-    font-size: 16px; 
+    font-size: 16px;
     border: none;
     border-radius: 5px;
     min-height: 1px;
@@ -8,7 +8,7 @@
 
 window#waybar {
     background: rgba(0, 0, 0, 0.0);
-    color: #a9a9a9;
+    color: #EDE0FF;
 }
 
 #clock,
@@ -16,9 +16,9 @@ window#waybar {
 #cpu,
 #battery,
 #workspaces {
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid #a9a9a9;
-    box-shadow: 0px 0px 5px 3px rgba(166, 227, 161, 0.2);
+    background: rgba(30, 18, 69, 0.78);
+    border: 1px solid rgba(150, 100, 220, 0.45);
+    box-shadow: 0px 0px 5px 3px rgba(255, 175, 60, 0.18);
     border-radius: 5px;
     padding: 0 10px;
     margin-top: 4px;
@@ -26,25 +26,24 @@ window#waybar {
 }
 
 #workspaces {
-    background: rgba(0, 0, 0, 0.6); 
+    background: rgba(30, 18, 69, 0.78);
 }
-
 
 #workspaces button {
     padding: 0 9px;
-    color: #a9a9a9;
+    color: #B090E0;
 }
 
 #workspaces button label {
-  font-size: 24px;
+    font-size: 24px;
 }
 
 #workspaces button.active {
-    color: #FFBF00;
+    color: #FFD060;
 }
 
 #workspaces button:hover {
-    background: rgba(102, 178, 178, 0.1);
+    background: rgba(200, 150, 255, 0.12);
     box-shadow: inherit;
     text-shadow: inherit;
 }
@@ -52,28 +51,26 @@ window#waybar {
 #battery {
     padding-left: 20px;
     padding-right: 20px;
-    border: 1px solid #a9a9a9;
+    border: 1px solid rgba(150, 100, 220, 0.45);
     border-radius: 5px;
 }
 
 #cpu {
     padding-left: 20px;
     padding-right: 20px;
-    border: 1px solid #a9a9a9;
+    border: 1px solid rgba(150, 100, 220, 0.45);
     border-radius: 5px;
 }
-
 
 #memory {
     padding-left: 20px;
     padding-right: 20px;
-    border: 1px solid #a9a9a9;
+    border: 1px solid rgba(150, 100, 220, 0.45);
     border-radius: 5px;
 }
 
-
 #clock {
-  padding-left: 20px;
-  padding-right: 20px;
-  color: #a9a9a9;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #EDE0FF;
 }
