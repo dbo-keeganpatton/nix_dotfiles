@@ -291,6 +291,7 @@ in
       "wheel"
       "sudo"
       "rex"
+      "plugdev"
     ];
     packages = with pkgs; [];
   };
@@ -331,6 +332,10 @@ in
 
     #->> Time of day wallpaper setting
     dynamicWallpaperScript
+
+    #->> Corne keyboard tooling
+    vial
+    qmk-udev-rules
 
     #->> These packages are for linux-casefolding fix
     #->> to fix texture issues in Counter Strike Source

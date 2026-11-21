@@ -12,4 +12,6 @@
   services.logind.settings.Login.HandleLidSwitchDocked  = "ignore";
 
   services.rex.enable = true;
+
+  services.udev.packages = [ pkgs.vial pkgs.qmk-udev-rules ];
 }
