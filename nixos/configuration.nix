@@ -64,7 +64,7 @@ let
     destination = "/bin/mpv-play-renderer";
     text = ''
       #!${pkgs.python3}/bin/python3
-      import sys, os, fcntl, termios, struct, base64, subprocess, signal, tempfile
+      import sys, os, fcntl, termios, struct, base64, subprocess, signal, tempfile, glob, time
 
       ESC = b"\033"
       ST  = b"\033\\"
@@ -93,12 +93,17 @@ let
           viz_w = cols * cell_w
           viz_h = rows * cell_h
 
-          # 5px opaque bar + 1px transparent gap, repeating across the width.
-          bar_period, bar_width = 6, 5
+          # One visual bar per showfreqs frequency bin (nb_freq = win_size/2),
+          # so each bar is a flat-topped rectangle instead of a jagged slice.
+          win_size   = 64
+          num_bars   = win_size // 2
+          bar_period = max(8, viz_w // num_bars)
+          gap_width  = max(2, bar_period // 5)
+          bar_width  = bar_period - gap_width
 
           fc = (
               f"[0:a]showfreqs=mode=bar:ascale=log:fscale=lin:"
-              f"win_size=1024:win_func=hann:colors=red|red:s={viz_w}x{viz_h},"
+              f"win_size={win_size}:win_func=hann:colors=red|red:s={viz_w}x{viz_h},"
               f"format=rgba,"
               f"geq=r='r(X,Y)':g=0:b=0:"
               f"a='255*lt(mod(X,{bar_period}),{bar_width})*gt(r(X,Y),16)'[v]"
@@ -113,23 +118,50 @@ let
           ]
 
           shm = "/dev/shm" if os.path.isdir("/dev/shm") else tempfile.gettempdir()
+          pid = os.getpid()
+          prefix = f"mpvplay-{pid}-"
+
+          def sweep_stale(max_age=1.0):
+              now = time.time()
+              for p in glob.glob(os.path.join(shm, prefix + "*.rgba")):
+                  try:
+                      if now - os.path.getmtime(p) > max_age:
+                          os.unlink(p)
+                  except OSError:
+                      pass
+
           proc = subprocess.Popen(cmd, stdout=subprocess.PIPE)
           frame_bytes = viz_w * viz_h * 4
           out = sys.stdout.buffer
 
-          out.write(b"\033[1;1H")
-          out.flush()
+          try:
+              out.write(b"\033[1;1H")
+              out.flush()
+          except (BrokenPipeError, OSError):
+              return
 
+          frame_idx = 0
           try:
               while True:
                   data = bytearray()
                   while len(data) < frame_bytes:
-                      chunk = proc.stdout.read(frame_bytes - len(data))
+                      try:
+                          chunk = proc.stdout.read(frame_bytes - len(data))
+                      except (OSError, ValueError):
+                          return
                       if not chunk:
                           return
                       data += chunk
 
-                  fd, path = tempfile.mkstemp(prefix="mpvplay-", suffix=".rgba", dir=shm)
+                  try:
+                      fd, path = tempfile.mkstemp(prefix=prefix, suffix=".rgba", dir=shm)
+                  except OSError:
+                      # /dev/shm full or similar. Sweep and retry once.
+                      sweep_stale(max_age=0.0)
+                      try:
+                          fd, path = tempfile.mkstemp(prefix=prefix, suffix=".rgba", dir=shm)
+                      except OSError:
+                          continue
                   try:
                       os.write(fd, bytes(data))
                   finally:
@@ -137,18 +169,35 @@ let
 
                   p64 = base64.standard_b64encode(path.encode()).decode("ascii")
                   keys = f"a=T,q=2,f=32,s={viz_w},v={viz_h},i=1,p=1,C=1,t=t"
-                  out.write(b"\033[1;1H")
-                  out.write(ESC + b"_G" + keys.encode("ascii") + b";" + p64.encode("ascii") + ST)
-                  out.flush()
+                  try:
+                      out.write(b"\033[1;1H")
+                      out.write(ESC + b"_G" + keys.encode("ascii") + b";" + p64.encode("ascii") + ST)
+                      out.flush()
+                  except (BrokenPipeError, OSError):
+                      try: os.unlink(path)
+                      except OSError: pass
+                      return
+
+                  frame_idx += 1
+                  if frame_idx % 60 == 0:
+                      sweep_stale()
           finally:
               try:
                   proc.terminate()
                   proc.wait(timeout=2)
               except subprocess.TimeoutExpired:
-                  proc.kill()
+                  try: proc.kill()
+                  except Exception: pass
+              except Exception:
+                  pass
+              sweep_stale(max_age=0.0)
 
       if __name__ == "__main__":
           signal.signal(signal.SIGINT, lambda *_: sys.exit(0))
+          try:
+              signal.signal(signal.SIGPIPE, signal.SIG_DFL)
+          except (AttributeError, ValueError):
+              pass
           main()
     '';
   };
