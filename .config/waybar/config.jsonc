@@ -18,9 +18,10 @@
     "modules-left": ["clock", "battery"],
     "modules-center": ["hyprland/workspaces"],
     "modules-right": [
+        "tray",
+        "wireplumber",
         "memory",
         "cpu"
-        
     ],
 
 
@@ -44,7 +45,20 @@
     "battery": {
         "states": { "warning": 30, "critical": 15 },
         "format": "{icon} {capacity}%",
-        "format-icons": ["⌁"] 
+        "format-charging": "󰂄 {capacity}%",
+        "format-full": "󰁹 full",
+        "format-icons": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰁹"]
+    },
+
+    "wireplumber": {
+        "format": "♪ {volume}%",
+        "format-muted": "♪ mute",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "scroll-step": 5
+    },
+
+    "tray": {
+        "spacing": 8
     },
     
     

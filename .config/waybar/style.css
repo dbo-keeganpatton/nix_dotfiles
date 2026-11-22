@@ -15,6 +15,8 @@ window#waybar {
 #memory,
 #cpu,
 #battery,
+#wireplumber,
+#tray,
 #workspaces {
     background: rgba(30, 18, 69, 0.78);
     border: 1px solid rgba(150, 100, 220, 0.45);
@@ -73,4 +75,34 @@ window#waybar {
     padding-left: 20px;
     padding-right: 20px;
     color: #EDE0FF;
+}
+
+#wireplumber {
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 1px solid rgba(150, 100, 220, 0.45);
+    border-radius: 5px;
+}
+
+#wireplumber.muted {
+    color: #806090;
+}
+
+#tray {
+    padding-left: 12px;
+    padding-right: 12px;
+    border: 1px solid rgba(150, 100, 220, 0.45);
+    border-radius: 5px;
+}
+
+#battery.charging {
+    color: #FFD060;
+}
+
+#battery.warning:not(.charging) {
+    color: #FFB060;
+}
+
+#battery.critical:not(.charging) {
+    color: #FF6060;
 }
