@@ -15,7 +15,7 @@
 
 
     // Module Selection
-    "modules-left": ["clock", "battery"],
+    "modules-left": ["custom/power", "clock", "battery"],
     "modules-center": ["hyprland/workspaces"],
     "modules-right": [
         "tray",
@@ -62,6 +62,12 @@
     },
     
     
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": false,
+        "on-click": "~/.config/waybar/scripts/power-menu.sh"
+    },
+
     "hyprland/workspaces": {
         "format": "{icon}",
         "format-icons": {

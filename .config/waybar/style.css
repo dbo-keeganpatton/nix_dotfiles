@@ -17,7 +17,8 @@ window#waybar {
 #battery,
 #wireplumber,
 #tray,
-#workspaces {
+#workspaces,
+#custom-power {
     background: rgba(30, 18, 69, 0.78);
     border: 1px solid rgba(150, 100, 220, 0.45);
     box-shadow: 0px 0px 5px 3px rgba(255, 175, 60, 0.18);
@@ -105,4 +106,19 @@ window#waybar {
 
 #battery.critical:not(.charging) {
     color: #FF6060;
+}
+
+#custom-power {
+    padding-left: 16px;
+    padding-right: 16px;
+    font-size: 18px;
+    color: #EDE0FF;
+    border: 1px solid rgba(150, 100, 220, 0.45);
+    border-radius: 5px;
+}
+
+#custom-power:hover {
+    color: #FFD060;
+    border-color: rgba(255, 208, 96, 0.55);
+    box-shadow: 0px 0px 5px 3px rgba(255, 175, 60, 0.3);
 }
