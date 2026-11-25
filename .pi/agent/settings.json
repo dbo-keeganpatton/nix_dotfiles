@@ -5,6 +5,6 @@
   "hideThinkingBlock": true,
   "theme": "dark",
   "packages": [
-    "npm:pi-claude-auth"
+    "npm:pi-claude-code-provider"
   ]
 }
