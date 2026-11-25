@@ -14,4 +14,11 @@
     wireplumber = { enable = true; };
   };
 
+  environment.systemPackages = with pkgs; [
+    wireplumber    # Audio session manager
+    alsa-utils     # ALSA CLI tools
+    pavucontrol    # PulseAudio volume control GUI
+    playerctl      # Media player control
+  ];
+
 }

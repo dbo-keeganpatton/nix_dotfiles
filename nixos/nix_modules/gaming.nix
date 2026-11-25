@@ -17,7 +17,7 @@
       extraArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
     };
 
-    protontricks.enable = true; 
+    protontricks.enable = true;
     extraPackages = with pkgs; [
       wineWow64Packages.stable
       winetricks
@@ -29,5 +29,30 @@
       yad
     ];
   };
+
+  environment.systemPackages = with pkgs; [
+    heroic                         # Game launcher
+
+    #->> Cyberpunk 2077 mod support
+    protontricks
+    zenity
+    freefont_ttf
+    liberation_ttf
+    freetype
+    fontconfig
+    libpng
+    #->>
+
+    #->> CS:S linux-casefolding fix
+    inotify-tools
+    libnotify
+    parallel
+    #->>
+
+    #->> Game dev
+    godot
+    android-studio
+    #->>
+  ];
 
 }

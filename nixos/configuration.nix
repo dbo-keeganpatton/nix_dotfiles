@@ -70,12 +70,8 @@ in
     phinger-cursors               # Custom Cursor
     wl-clipboard                  # Wayland Copy/Paste Utility
     wf-recorder                   # Screen Recording Utility
-    wireplumber                   # Audio Utility
-    alsa-utils                    # Audio Utility
-    pavucontrol                   # Audio Control GUI
     tree-sitter                   # Syntax Parser for Editor
     fastfetch                     # System Info Tool
-    playerctl                     # Audio Utility
     grimblast                     # Screenshots
     hyprpaper                     # Wallpaper Utility
     hyprlock                      # Screen Locking
@@ -95,30 +91,6 @@ in
     #->> Corne keyboard tooling
     vial
     qmk-udev-rules
-
-    #->> These packages are for linux-casefolding fix
-    #->> to fix texture issues in Counter Strike Source
-    inotify-tools
-    libnotify
-    parallel
-    #->>
-
-    #->> Packages specifically for Cyberpunk 2077 mod support
-    protontricks                  # Linux gaming utility
-    zenity                        # Linus gaming utility
-    freefont_ttf                  # Required by WINE (Protontricks)
-    liberation_ttf                # Required by WINE (Protontricks)
-    freetype
-    fontconfig
-    libpng
-    heroic
-    #->>
-
-
-    #->> Game dev
-    godot
-    android-studio
-    #->>
 
     discord-ptb                   # discord chat
     gnome-calendar                # Calendar App
