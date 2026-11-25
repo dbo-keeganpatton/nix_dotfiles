@@ -6,5 +6,8 @@
   "theme": "dark",
   "packages": [
     "npm:pi-claude-code-provider"
-  ]
+  ],
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:pi-claude-code-provider\",\"scope\":\"user\"}": "0.6.0"
+  }
 }

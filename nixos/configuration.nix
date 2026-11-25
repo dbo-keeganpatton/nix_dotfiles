@@ -95,7 +95,7 @@ in
     discord-ptb                   # discord chat
     gnome-calendar                # Calendar App
     starship                      # Command Line Prompt Customizer
-    claude-code                   # CLI AI Coding agent
+    unstable.claude-code          # CLI AI Coding agent
     unstable.pi-coding-agent      # Coding agent CLI
     herdr                         # Terminal multiplexer for coding agents
     python3                       # Python Runtime
