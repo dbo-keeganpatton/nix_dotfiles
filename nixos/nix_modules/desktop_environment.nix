@@ -7,6 +7,8 @@ let
 in
 {
 
+  environment.systemPackages = [ custom-astronaut ];
+
   services.displayManager.sddm = {
     enable         = true;
     wayland.enable = true;
