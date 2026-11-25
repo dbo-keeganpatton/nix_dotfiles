@@ -1,16 +1,12 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-unstable, inputs, ... }:
 let
 
-  unstable = import <nixos-unstable> {};
+  unstable = pkgs-unstable;
 
   # Herdr is an agent harness tool
-  herdr = (builtins.getFlake "github:herdrdev/herdr/v0.8.2")
-    .packages.${pkgs.system}.default;
+  herdr = inputs.herdr.packages.${pkgs.system}.default;
 
-  # Zen browser does not have an official package yet
-  # so this flake work around is required
-  zen-browser = (builtins.getFlake "github:youwen5/zen-browser-flake")
-    .packages.${pkgs.system}.default;
+  zen-browser = inputs.zen-browser-flake.packages.${pkgs.system}.default;
 
 
   # Keybind GUI utility toggle by SUPER+i
@@ -257,7 +253,6 @@ in
     ./nix_modules/graphics.nix
     ./nix_modules/gaming.nix
     ./nix_modules/sound.nix
-    (builtins.getFlake "https://pkgs.superlogical.com/rex/nix/preview.tar.gz").nixosModules.default
   ];
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
@@ -365,6 +360,7 @@ in
     gnome-calendar                # Calendar App
     starship                      # Command Line Prompt Customizer
     claude-code                   # CLI AI Coding agent
+    unstable.pi-coding-agent      # Coding agent CLI
     herdr                         # Terminal multiplexer for coding agents
     python3                       # Python Runtime
     cmatrix			                  # Turbo Nerd Flex Tool
