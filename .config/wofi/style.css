@@ -1,46 +1,47 @@
 window {
-  color: white;
   background: transparent;
+  border: none;
+  box-shadow: none;
+  color: #EDE0FF;
+  font-family: "Ubuntu Nerd Font", "Roboto", sans-serif;
+  font-size: 14px;
 }
-
 
 #input {
-  background-color: black;
-  border: solid 1px #a9a9a9;
-  border-radius: 2px;
-  color: white;
+  background-color: rgba(48, 32, 99, 0.85);
+  border: 1px solid rgba(150, 100, 220, 0.45);
+  border-radius: 4px;
+  color: #EDE0FF;
+  margin: 6px 6px 2px 6px;
+  padding: 4px 8px;
 }
-
 
 #input:focus {
-  border: 1px solid #a9a9a9; 
-  outline: none;             
-  box-shadow: none;          
+  border: 1px solid rgba(255, 208, 96, 0.55);
+  outline: none;
+  box-shadow: none;
 }
-
 
 #text:selected {
-  color: #a9a9a9;
+  color: #FFD060;
 }
 
-
 #entry {
-  background-color: black;
+  background-color: transparent;
+  border-radius: 4px;
+  padding: 2px 6px;
   opacity: 0.0;
 }
 
-
 #entry:selected {
-  background-color: black;
-  border: solid 1px #a9a9a9;
-  border-radius: 2px;
+  background-color: rgba(150, 100, 220, 0.18);
+  border: 1px solid rgba(255, 208, 96, 0.55);
+  border-radius: 4px;
   outline: none;
   opacity: 1.0;
 }
 
-
 scrollbar {
-  /* Hiding the scroll bar because I hate it */
   width: 0px;
   min-width: 0px;
   background: transparent;
