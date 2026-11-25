@@ -67,19 +67,10 @@ in
   environment.systemPackages = with pkgs; [
     python3Packages.pynvim        # Neovim Python Client
     python3Packages.pip           # Python Package Manager
-    phinger-cursors               # Custom Cursor
-    wl-clipboard                  # Wayland Copy/Paste Utility
-    wf-recorder                   # Screen Recording Utility
     tree-sitter                   # Syntax Parser for Editor
     fastfetch                     # System Info Tool
-    grimblast                     # Screenshots
-    hyprpaper                     # Wallpaper Utility
-    hyprlock                      # Screen Locking
-    hypridle                      # System Idle Daemon
     vlc
-    waypaper                      # Wallpaper Manager
-    mpvpaper                      # Live Wallpaper Utility
-    unstable.mpv                           # YT music player TUI
+    unstable.mpv                  # Media player
     luarocks                      # Lua Package Manager
     libreoffice                   # Mundane utilities
     rpi-imager                    # Raspberry Pi imager
@@ -109,25 +100,17 @@ in
     unstable.circumflex           # TUI for browsing hackernews
     heroku                        # Deployment and Hosting Service CLI
     kalker                        # System Calculator
-    waybar                        # Desktop Navbar
     lua5_1                        # Lua Runtime
     nodejs                        # Node Package Manager
-    slurp                         # Screenshot helper utility
     unzip                         # Extraction Utility
     rustc                         # Rust runtime
     cargo                         # Rust Package Manager
-    krita                         # Vector grapgic editor
+    krita                         # Vector graphic editor
     nmap                          # Network Application
-    rofi                          # Wayland Window Switcher Utility
-    contour                       # testing terminal
-    kitty                         # Settle Terminal
-    wofi                          # Menu GUI
     gimp
     btop-cuda                     # Btop Version for GPU monitoring
-    hyprsunset                    # Night Light
     ffmpeg
     yazi                          # Command Line File Manager
-    grim                          # Screenshot Utility
     tmux                          # Terminal Multiplexer
     wget                          # File downloader
     gcc                           # C Compiler
