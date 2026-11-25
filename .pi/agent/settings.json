@@ -1,0 +1,10 @@
+{
+  "lastChangelogVersion": "1.6.0",
+  "defaultProvider": "ollama",
+  "defaultModel": "gemma4:e2b",
+  "hideThinkingBlock": true,
+  "theme": "dark",
+  "packages": [
+    "npm:pi-claude-auth"
+  ]
+}
