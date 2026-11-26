@@ -3,9 +3,12 @@
   "defaultProvider": "claude-bridge",
   "defaultModel": "claude-sonnet-5-5",
   "hideThinkingBlock": true,
-  "theme": "dark",
+  "theme": "campfire",
   "packages": [
     "npm:pi-claude-bridge",
     "npm:@gotgenes/pi-subagents"
-  ]
+  ],
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:@gotgenes/pi-subagents\",\"scope\":\"user\"}": "25.1.0"
+  }
 }
