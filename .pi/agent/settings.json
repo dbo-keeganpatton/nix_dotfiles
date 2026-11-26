@@ -1,13 +1,11 @@
 {
   "lastChangelogVersion": "1.6.0",
-  "defaultProvider": "ollama",
-  "defaultModel": "gemma4:e2b",
+  "defaultProvider": "claude-bridge",
+  "defaultModel": "claude-sonnet-5-5",
   "hideThinkingBlock": true,
   "theme": "dark",
   "packages": [
-    "npm:pi-claude-code-provider"
-  ],
-  "extensionChangelogVersions": {
-    "{\"source\":\"npm:pi-claude-code-provider\",\"scope\":\"user\"}": "0.6.0"
-  }
+    "npm:pi-claude-bridge",
+    "npm:@gotgenes/pi-subagents"
+  ]
 }
