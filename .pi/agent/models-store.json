@@ -21,9 +21,9 @@
         "contextWindow": 1000000,
         "maxTokens": 128000,
         "thinkingLevelMap": {
-          "off": null,
           "xhigh": "xhigh",
-          "max": "max"
+          "max": "max",
+          "off": null
         },
         "compat": {
           "forceAdaptiveThinking": true,
@@ -91,9 +91,9 @@
         "contextWindow": 1000000,
         "maxTokens": 128000,
         "thinkingLevelMap": {
-          "off": null,
           "xhigh": "xhigh",
-          "max": "max"
+          "max": "max",
+          "off": null
         },
         "compat": {
           "forceAdaptiveThinking": true,
@@ -140,9 +140,9 @@
         "contextWindow": 1000000,
         "maxTokens": 128000,
         "thinkingLevelMap": {
-          "off": null,
           "xhigh": "xhigh",
-          "max": "max"
+          "max": "max",
+          "off": null
         },
         "compat": {
           "forceAdaptiveThinking": true,
@@ -610,13 +610,13 @@
         "contextWindow": 1000000,
         "maxTokens": 128000,
         "thinkingLevelMap": {
-          "off": null,
           "minimal": null,
           "low": "low",
           "medium": "medium",
           "high": "high",
           "xhigh": "xhigh",
-          "max": "max"
+          "max": "max",
+          "off": null
         },
         "compat": {
           "forceAdaptiveThinking": true,
@@ -834,13 +834,13 @@
         "contextWindow": 1000000,
         "maxTokens": 128000,
         "thinkingLevelMap": {
-          "off": null,
           "minimal": null,
           "low": "low",
           "medium": "medium",
           "high": "high",
           "xhigh": "xhigh",
-          "max": "max"
+          "max": "max",
+          "off": null
         },
         "compat": {
           "forceAdaptiveThinking": true,
@@ -869,8 +869,8 @@
         "type": "chat"
       }
     ],
-    "lastModified": 1795526502000,
-    "etag": "W/\"df29ce52198fbf32d274b2cdcaf27bb8\"",
-    "checkedAt": 1795579282344
+    "lastModified": 1795613997000,
+    "etag": "W/\"e49939a7ed3cc693f78c83708843e468\"",
+    "checkedAt": 1795659886806
   }
 }
